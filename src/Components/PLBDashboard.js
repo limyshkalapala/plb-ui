@@ -14,6 +14,12 @@ const StyledCard = styled(Card)`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);  // Add shadow for better contrast
 `;
 
+// Style for moisture level
+const MoistureLevelTypography = styled(Typography)`
+    color: ${props => props.level === 'High Moisture Level' ? 'red' : 'green'};  // Red for high, green for low
+    font-weight: bold;
+`;
+
 const PLBDashboard = ({ plbData }) => {
     const { location, status, moistureLevel, contacts } = plbData;
 
@@ -32,7 +38,9 @@ const PLBDashboard = ({ plbData }) => {
                     <StyledCard>
                         <CardContent>
                             <Typography variant="h5" component="div">Moisture Level</Typography>
-                            <Typography variant="body2" component="p">{moistureLevel} %</Typography>
+                            <MoistureLevelTypography variant="body2" component="p" level={moistureLevel}>
+                                {moistureLevel === 'High Moisture Level' ? 'High Moisture Level' : 'Low Moisture Level'}
+                            </MoistureLevelTypography>
                         </CardContent>
                     </StyledCard>
                 </Grid>
@@ -43,7 +51,7 @@ const PLBDashboard = ({ plbData }) => {
                             <List>
                                 {contacts.map((contact, index) => (
                                     <ListItem key={index}>
-                                        <ListItemText primary={contact.name} secondary={contact.phone} />
+                                        <ListItemText primary={contact.name} secondary={contact.email} />
                                     </ListItem>
                                 ))}
                             </List>
